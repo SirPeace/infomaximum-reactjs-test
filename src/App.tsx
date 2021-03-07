@@ -38,26 +38,29 @@ const App = () => {
     { path: "/profile", component: ProfilePage },
   ]
 
-  const renderProtectedRoutes = protectedRoutes.map((route: RouteSchema) => (
-    <Route
-      path={route.path}
-      component={
-        !error
-          ? route.component
-          : (error.graphQLErrors[0] as any)?.statusCode === 401
-          ? ErrorPage.bind(null, {
-              title: "Ошибка авторизации",
-              message: "Вы не авторизованы",
-              links: [{ to: "/login", text: "Войти в систему" }],
-            })
-          : ErrorPage.bind(null, {
-              title: "Неизвестная ошибка",
-              message: "Произошла неизвестная ошибка",
-              links: [],
-            })
-      }
-    />
-  ))
+  const renderProtectedRoutes = protectedRoutes.map(
+    (route: RouteSchema, key) => (
+      <Route
+        key={key}
+        path={route.path}
+        component={
+          !error
+            ? route.component
+            : (error.graphQLErrors[0] as any)?.statusCode === 401
+            ? ErrorPage.bind(null, {
+                title: "Ошибка авторизации",
+                message: "Вы не авторизованы",
+                links: [{ to: "/login", text: "Войти в систему" }],
+              })
+            : ErrorPage.bind(null, {
+                title: "Неизвестная ошибка",
+                message: "Произошла неизвестная ошибка",
+                links: [],
+              })
+        }
+      />
+    )
+  )
 
   return (
     <AppShell>
