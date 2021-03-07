@@ -9,7 +9,6 @@ import useValidationSchema from "../../../utils/useValidationSchema"
 import { FieldState } from "final-form"
 import { useMutation } from "@apollo/client"
 import { Login } from "../../../server/mutations"
-import { UserData } from "../../../store/auth/reducer"
 
 const schema = yup.object().shape({
   email: yup
@@ -56,8 +55,8 @@ const PasswordInputAdapter = ({
 export interface LoginFormProps {
   handleErrors: (error: string) => void
   onSubmit?: () => void
-  authorizeUser?: (token: string, data: UserData) => void
-  user?: UserData
+  authorizeUser?: (token: string, data: Object) => void
+  user?: Object
 }
 
 const LoginForm: VFC<LoginFormProps> = ({ handleErrors, onSubmit }) => {
