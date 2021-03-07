@@ -7,10 +7,13 @@ import {
 import { setContext } from "@apollo/client/link/context"
 import React from "react"
 import ReactDOM from "react-dom"
+import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
+import { createStore } from "redux"
 import App from "./App"
 import "./index.scss"
 import reportWebVitals from "./reportWebVitals"
+import rootReducer from "./store"
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/api",
@@ -31,12 +34,20 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
+const store = createStore(
+  rootReducer,
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+)
+
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={apolloClient}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
