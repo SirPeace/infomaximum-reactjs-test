@@ -1,0 +1,104 @@
+.logo {
+  display: block;
+  background-image: url("./logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 150.51px;
+  min-height: 48px;
+}
+
+.LoginPage,
+.SignupPage {
+  background: linear-gradient(229.68deg, #6879bb 7.06%, #9300bb 95.23%);
+  min-height: 100vh;
+
+  &__container {
+    max-width: 424px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .logo {
+    margin: 32px 0;
+  }
+
+  .links {
+    list-style: none;
+
+    & > * {
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+
+  .paper {
+    flex-grow: 1;
+    padding: 0;
+
+    &__container {
+      max-width: 328px;
+      margin: auto;
+      padding-top: 18px;
+    }
+  }
+
+  &__form {
+    input,
+    .password-input {
+      margin: 6px 0;
+    }
+
+    .password-input input {
+      margin: 0;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      margin: 18px 0;
+    }
+  }
+
+  .alert {
+    margin-top: 24px;
+  }
+}
+
+.AppPage {
+  background-color: #ebf2fb;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &__body {
+    padding: 22px;
+    overflow-y: auto;
+    height: 100%;
+    flex-grow: 1;
+  }
+}
+
+.ProcessesPage {
+  .ProcessCard {
+    margin-bottom: 12px;
+  }
+}
+
+.ProfilePage {
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 35px;
+    color: #404064;
+  }
+}

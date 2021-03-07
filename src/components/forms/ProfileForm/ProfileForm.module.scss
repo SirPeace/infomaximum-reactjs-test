@@ -1,0 +1,33 @@
+.ProfileForm {
+  .formControl {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    max-width: 696px;
+
+    &__input,
+    &__password {
+      width: 100%;
+      max-width: 328px;
+    }
+
+    label {
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 36px;
+      color: #999999;
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: 512px) {
+    .formControl {
+      flex-direction: column;
+
+      &__input,
+      &__password {
+        max-width: none;
+      }
+    }
+  }
+}
