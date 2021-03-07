@@ -10,6 +10,14 @@ import { useMutation, useQuery } from "@apollo/client"
 import { EditUser } from "../../../server/mutations"
 import { CurrentUser } from "../../../server/queries"
 
+export interface ProfileFormFields {
+  firstName: string
+  secondName: string
+  email: string
+  password: string
+  passwordConfirmation: string
+}
+
 const schema = yup.object().shape({
   firstName: yup
     .string()
@@ -81,16 +89,17 @@ const PasswordInputAdapter = ({
 
 export interface ProfileFormProps {
   handleErrors: (error: string) => void
-  onSubmit?: () => void
-  afterSubmit?: () => void
-  onSuccess?: () => void
+  onSubmit: () => void
+  afterSubmit: () => void
+  onSuccess: (values: ProfileFormFields) => void
+  onChange: (values: ProfileFormFields) => void
   firstName: string
   secondName: string
   email: string
 }
 
 const ProfileForm = React.forwardRef<HTMLFormElement, ProfileFormProps>(
-  ({ onSubmit, afterSubmit, handleErrors, onSuccess }, ref) => {
+  ({ onSubmit, afterSubmit, handleErrors, onSuccess, onChange }, ref) => {
     const validate = useValidationSchema(schema, true)
     const [editUser] = useMutation(EditUser)
     const {
@@ -99,8 +108,8 @@ const ProfileForm = React.forwardRef<HTMLFormElement, ProfileFormProps>(
       },
     } = useQuery(CurrentUser)
 
-    const handleSubmit = async (data: any) => {
-      if (onSubmit) onSubmit()
+    const handleSubmit = async (data: ProfileFormFields) => {
+      onSubmit()
 
       const userData = {
         id: userID,
@@ -112,18 +121,38 @@ const ProfileForm = React.forwardRef<HTMLFormElement, ProfileFormProps>(
 
       try {
         await editUser({ variables: userData })
-        if (onSuccess) onSuccess()
+        onSuccess({
+          email: data.email || "",
+          firstName: data.firstName || "",
+          secondName: data.secondName || "",
+          password: data.password || "",
+          passwordConfirmation: data.passwordConfirmation || "",
+        })
       } catch (err) {
         handleErrors(err.message)
       }
 
-      if (afterSubmit) afterSubmit()
+      afterSubmit()
     }
 
     return (
       <Form
         onSubmit={handleSubmit}
-        validate={values => validate(values)}
+        validate={(values: ProfileFormFields) => {
+          const errors = validate(values)
+
+          if (!errors) {
+            onChange({
+              email: values.email || "",
+              firstName: values.firstName || "",
+              secondName: values.secondName || "",
+              password: values.password || "",
+              passwordConfirmation: values.passwordConfirmation || "",
+            })
+          }
+
+          return errors
+        }}
         render={({ handleSubmit }) => (
           <form
             onSubmit={handleSubmit}

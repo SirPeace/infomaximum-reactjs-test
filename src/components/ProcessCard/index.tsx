@@ -1,4 +1,5 @@
 import React, { VFC } from "react"
+import { Link } from "react-router-dom"
 import classes from "./ProcessCard.module.scss"
 import { calcDurationRatio } from "./utils/calcDurationRatio"
 import { formatDate } from "./utils/formatDate"
@@ -15,6 +16,7 @@ export interface ProcessCardProps {
   start: string
   end: string
   loading: string
+  forwardTo?: string | false
 }
 
 const ProcessCard: VFC<ProcessCardProps> = ({
@@ -27,11 +29,21 @@ const ProcessCard: VFC<ProcessCardProps> = ({
   start,
   end,
   loading,
+  forwardTo = false,
 }) => (
   <article className={classes.ProcessCard}>
     <header className={classes.head}>
       <h3 className={classes.title}>{name}</h3>
-      <span className={classes.link}>На карту процесса</span>
+      {forwardTo ? (
+        <Link
+          to={forwardTo}
+          className={`${classes.link} ${classes.link_active}`}
+        >
+          На карту процесса
+        </Link>
+      ) : (
+        <span className={classes.link}>На карту процесса</span>
+      )}
     </header>
 
     <hr className={classes.hr} />
