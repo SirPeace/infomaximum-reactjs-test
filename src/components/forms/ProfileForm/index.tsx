@@ -6,9 +6,11 @@ import classes from "./ProfileForm.module.scss"
 import * as yup from "yup"
 import useValidationSchema from "../../../utils/useValidationSchema"
 import { FieldState } from "final-form"
-import { useMutation, useQuery } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 import { EditUser } from "../../../server/mutations"
-import { CurrentUser } from "../../../server/queries"
+import { connect } from "react-redux"
+import { UserState } from "../../../store/user/reducer"
+import { updateUserData } from "../../../store/user/actions"
 
 export interface ProfileFormFields {
   firstName: string
@@ -96,23 +98,19 @@ export interface ProfileFormProps {
   firstName: string
   secondName: string
   email: string
+  user: UserState
 }
 
 const ProfileForm = React.forwardRef<HTMLFormElement, ProfileFormProps>(
-  ({ onSubmit, afterSubmit, handleErrors, onSuccess, onChange }, ref) => {
+  ({ onSubmit, afterSubmit, handleErrors, onSuccess, onChange, user }, ref) => {
     const validate = useValidationSchema(schema, true)
     const [editUser] = useMutation(EditUser)
-    const {
-      data: {
-        currentUser: { id: userID, firstName, secondName, email },
-      },
-    } = useQuery(CurrentUser)
 
     const handleSubmit = async (data: ProfileFormFields) => {
       onSubmit()
 
       const userData = {
-        id: userID,
+        id: user.id,
         firstName: data.firstName,
         secondName: data.secondName,
         email: data.email,
@@ -167,7 +165,7 @@ const ProfileForm = React.forwardRef<HTMLFormElement, ProfileFormProps>(
                   component={InputAdapter}
                   type="text"
                   id="firstName"
-                  initialValue={firstName}
+                  initialValue={user.firstName}
                 />
               </div>
             </div>
@@ -180,7 +178,7 @@ const ProfileForm = React.forwardRef<HTMLFormElement, ProfileFormProps>(
                   component={InputAdapter}
                   type="text"
                   id="secondName"
-                  initialValue={secondName}
+                  initialValue={user.secondName}
                 />
               </div>
             </div>
@@ -193,7 +191,7 @@ const ProfileForm = React.forwardRef<HTMLFormElement, ProfileFormProps>(
                   component={InputAdapter}
                   type="email"
                   id="email"
-                  initialValue={email}
+                  initialValue={user.email}
                 />
               </div>
             </div>

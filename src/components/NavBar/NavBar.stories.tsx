@@ -1,7 +1,7 @@
 import { Meta, Story } from "@storybook/react"
 import React from "react"
 
-import NavBar, { NavBarProps } from "."
+import NavBar from "."
 import NavDrawer from "../AppShell/NavDrawer"
 import Drawer from "../Drawer"
 import Backdrop from "../Backdrop"
@@ -16,11 +16,8 @@ export default {
   },
 } as Meta
 
-export const Default: Story<NavBarProps> = args => (
+export const Default: Story = args => (
   <div style={{ position: "relative" }}>
     <NavBar {...args} />
   </div>
 )
-Default.args = {
-  //
-}

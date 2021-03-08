@@ -9,8 +9,14 @@ import ProfileForm, { ProfileFormFields } from "../components/forms/ProfileForm"
 import useTitle from "../utils/useTitle"
 import { useQuery } from "@apollo/client"
 import { CurrentUser } from "../server/queries"
+import { connect } from "react-redux"
+import { UserState } from "../store/user/reducer"
+import { updateUserData } from "../store/user/actions"
 
-const ProfilePage: VFC = () => {
+const ProfilePage: VFC<{
+  user: UserState
+  updateUser: (user: UserState) => void
+}> = ({ user, updateUser }) => {
   useTitle("Редактирование пользователя")
 
   const { data } = useQuery(CurrentUser)
@@ -53,6 +59,12 @@ const ProfilePage: VFC = () => {
   }
 
   const onSuccess = (values: ProfileFormFields) => {
+    updateUser({
+      id: user.id,
+      firstName: values.firstName,
+      secondName: values.secondName,
+      email: values.email,
+    })
     setFormSnapshot(values)
     setSubmitted(true)
     setTimeout(() => setSubmitted(false), 3000)
@@ -88,6 +100,7 @@ const ProfilePage: VFC = () => {
 
         <Paper>
           <ProfileForm
+            user={user}
             firstName={data.currentUser.firstName}
             secondName={data.currentUser.secondName}
             email={data.currentUser.email}
@@ -111,4 +124,12 @@ const ProfilePage: VFC = () => {
   )
 }
 
-export default ProfilePage
+const mapStateToProps = (state: any) => ({
+  user: state.user,
+})
+
+const mapDispatchToProps = (dispatch: Function) => ({
+  updateUser: (data: UserState) => dispatch(updateUserData(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage)

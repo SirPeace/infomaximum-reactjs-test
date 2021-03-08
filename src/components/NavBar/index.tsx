@@ -1,12 +1,8 @@
-import React, { FC } from "react"
+import React, { VFC } from "react"
 import { AppShellContext } from "../AppShell"
 import classes from "./NavBar.module.scss"
 
-export interface NavBarProps {
-  //
-}
-
-const NavBar: FC<NavBarProps> = () => {
+const NavBar: VFC = () => {
   const { setDrawer } = React.useContext(AppShellContext)
 
   const handleLogout = () => {

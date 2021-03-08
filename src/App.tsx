@@ -1,4 +1,4 @@
-import React, { ComponentType } from "react"
+import React, { ComponentType, VFC } from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import { useQuery } from "@apollo/client"
 
@@ -10,9 +10,26 @@ import { CurrentUser } from "./server/queries"
 import ErrorPage from "./pages/errorPage"
 import NotFound from "./pages/404"
 import AppShell from "./components/AppShell"
+import { connect } from "react-redux"
+import { UserState } from "./store/user/reducer"
+import { updateUserData } from "./store/user/actions"
 
-const App = () => {
+interface AppProps {
+  updateUser: (data: UserState) => void
+  user: UserState | {}
+}
+
+const App: VFC<AppProps> = ({ user, updateUser }) => {
   const { loading, error } = useQuery(CurrentUser, {
+    skip: JSON.stringify(user) !== JSON.stringify({}),
+    onCompleted: data => {
+      updateUser({
+        id: data.currentUser.id,
+        firstName: data.currentUser.firstName,
+        secondName: data.currentUser.secondName,
+        email: data.currentUser.email,
+      })
+    },
     onError: err => {
       if ((err.graphQLErrors[0] as any)?.statusCode === 401) {
         localStorage.removeItem("token")
@@ -75,4 +92,9 @@ const App = () => {
   )
 }
 
-export default App
+export default connect(
+  (state: any) => ({ user: state.user }),
+  (dispatch: Function) => ({
+    updateUser: (data: UserState) => dispatch(updateUserData(data)),
+  })
+)(App)
