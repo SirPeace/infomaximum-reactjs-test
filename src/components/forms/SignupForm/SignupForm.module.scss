@@ -1,9 +1,13 @@
-.login-form {
-  &__input {
+.SignupForm {
+  .input {
     margin: 12px 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
-  &__submit-button {
+  .submitButton {
     margin: 18px 0;
   }
 }

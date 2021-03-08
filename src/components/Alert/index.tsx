@@ -18,7 +18,7 @@ const Alert: VFC<AlertProps> = ({
   size = "normal",
   onClose,
 }) => {
-  const appliedClasses = [classes.alert]
+  const appliedClasses = [classes.Alert]
   if (type === "danger") {
     appliedClasses.push(classes.alertDanger)
   } else if (type === "success") {

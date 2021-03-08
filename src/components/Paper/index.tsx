@@ -7,7 +7,7 @@ const Paper: FC<{ [key: string]: string | ReactNode }> = ({
   ...props
 }) => {
   return (
-    <div {...props} className={`${classes.paper} ${props.className || ""}`}>
+    <div {...props} className={`${classes.Paper} ${props.className || ""}`}>
       {children}
     </div>
   )

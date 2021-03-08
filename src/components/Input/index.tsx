@@ -28,12 +28,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const inputClasses = [classes.input]
+    const inputClasses = [classes.Input]
     if (error) inputClasses.push(classes.error)
 
     const errorMessageElement =
       error && errorMessage ? (
-        <span className={classes["error-message"]}>{errorMessage}</span>
+        <span className={classes.errorMessage}>{errorMessage}</span>
       ) : null
 
     return (

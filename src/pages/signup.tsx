@@ -26,6 +26,7 @@ const SignupPage = () => {
         <div className={classes.logo}></div>
         <Paper className={classes.paper}>
           <div className={classes.paper__container}>
+            <h3>Регистрация</h3>
             <SignupForm handleErrors={handleErrors} onSubmit={handleSubmit} />
 
             <p>

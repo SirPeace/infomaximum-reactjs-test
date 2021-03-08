@@ -27,13 +27,13 @@ const PasswordInput: FC<PasswordInputProps> = ({
     }
   }
 
-  const eyeClasses = [classes["password-input__eye"]]
+  const eyeClasses = [classes.eye]
   if (!isVisible) {
-    eyeClasses.push(classes["password-input__eye_closed"])
+    eyeClasses.push(classes.eye_closed)
   }
 
   return (
-    <div className={`${classes["password-input"]}`}>
+    <div className={`${classes.PasswordInput}`}>
       <Input
         ref={inputRef}
         disabled={disabled}

@@ -15,11 +15,11 @@
   position: relative;
   z-index: 1;
 
-  &_expanded {
+  &.expanded {
     width: 100%;
   }
 
-  &_loading {
+  &.loading {
     background-image: url("./loader.svg");
     background-position: center;
     background-repeat: no-repeat;

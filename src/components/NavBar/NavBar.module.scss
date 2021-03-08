@@ -1,4 +1,4 @@
-.app-bar {
+.AppBar {
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -19,12 +19,12 @@
     font-size: 12px;
   }
 
-  .drawer-button,
-  &__nav-link {
+  .drawerButton,
+  .navLink {
     margin-right: 12px;
   }
 
-  &__nav-link {
+  .navLink {
     font-family: "Open Sans";
     text-decoration: none;
     display: inline-block;
@@ -50,7 +50,7 @@
   }
 }
 
-.drawer-button {
+.drawerButton {
   background: none;
   background-image: url("drawer-button.svg");
   background-position: center;

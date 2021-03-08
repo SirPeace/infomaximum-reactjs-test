@@ -11,18 +11,15 @@ const NavBar: VFC = () => {
   }
 
   return (
-    <header className={classes["app-bar"]}>
+    <header className={classes.AppBar}>
       <div className={classes.barStart}>
         <button
-          className={classes["drawer-button"]}
+          className={classes.drawerButton}
           onClick={() => setDrawer(true)}
         ></button>
 
-        <nav className={classes["app-bar__nav"]}>
-          <span
-            className={classes["app-bar__nav-link"]}
-            onClick={() => setDrawer(true)}
-          >
+        <nav>
+          <span className={classes.navLink} onClick={() => setDrawer(true)}>
             Меню
           </span>
         </nav>

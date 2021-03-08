@@ -50,8 +50,8 @@ const LoginForm: VFC<LoginFormProps> = ({ handleErrors, onSubmit }) => {
       onSubmit={handleSubmit}
       validate={values => validate(values)}
       render={({ handleSubmit, submitting, valid }) => (
-        <form onSubmit={handleSubmit} className={classes["login-form"]}>
-          <div className={classes["login-form__input"]}>
+        <form onSubmit={handleSubmit} className={classes.LoginForm}>
+          <div className={classes.input}>
             <Field
               name="email"
               component={InputAdapter}
@@ -59,7 +59,7 @@ const LoginForm: VFC<LoginFormProps> = ({ handleErrors, onSubmit }) => {
             />
           </div>
 
-          <div className={classes["login-form__input"]}>
+          <div className={classes.input}>
             <Field
               name="password"
               component={PasswordInputAdapter}
@@ -67,7 +67,7 @@ const LoginForm: VFC<LoginFormProps> = ({ handleErrors, onSubmit }) => {
             />
           </div>
 
-          <div className={classes["login-form__submit-button"]}>
+          <div className={classes.submitButton}>
             <Button expand loading={submitting} disabled={!valid} type="submit">
               Войти в систему
             </Button>

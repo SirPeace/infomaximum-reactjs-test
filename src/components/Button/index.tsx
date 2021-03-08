@@ -23,10 +23,10 @@ const Button: React.VFC<ButtonProps> = ({
   const buttonRef = React.createRef<HTMLButtonElement>()
 
   if (expand) {
-    appliedClasses.push(classes.button_expanded)
+    appliedClasses.push(classes.expanded)
   }
   if (loading) {
-    appliedClasses.push(classes.button_loading)
+    appliedClasses.push(classes.loading)
   }
 
   return (
