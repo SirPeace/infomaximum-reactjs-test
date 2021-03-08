@@ -1,18 +1,15 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useQuery } from "@apollo/client"
 
 import classes from "./styles.module.scss"
-import { CurrentUser } from "../server/queries"
 import Paper from "../components/Paper"
 import useTitle from "../utils/useTitle"
+import { connect } from "react-redux"
+import { State } from "../store"
+import { UserState } from "../store/user/reducer"
 
-const NotFound = () => {
+const NotFound = ({ user }: { user: UserState }) => {
   useTitle("Ошибка авторизации")
-
-  const {
-    data: { currentUser },
-  } = useQuery(CurrentUser)
 
   return (
     <div className={classes["LoginPage"]}>
@@ -26,7 +23,7 @@ const NotFound = () => {
             <h1 style={{ fontSize: 22, margin: "20px 0" }}>
               Страница не найдена
             </h1>
-            {currentUser ? (
+            {JSON.stringify(user) !== "{}" ? (
               <Link to="/processes">Перейти к процессам</Link>
             ) : (
               <Link to="/login">Войти в систему</Link>
@@ -38,4 +35,8 @@ const NotFound = () => {
   )
 }
 
-export default NotFound
+const mapStateToProps = (state: State) => ({
+  user: state.user,
+})
+
+export default connect(mapStateToProps)(NotFound)

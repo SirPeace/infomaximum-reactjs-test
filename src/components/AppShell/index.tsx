@@ -2,12 +2,10 @@ import React, { Dispatch, FC, SetStateAction } from "react"
 
 import NavDrawer from "./NavDrawer"
 
-interface AppShellValues {
+export const AppShellContext = React.createContext<{
   drawer: boolean
   setDrawer: Dispatch<SetStateAction<boolean>>
-}
-
-export const AppShellContext = React.createContext<AppShellValues>({
+}>({
   drawer: false,
   setDrawer: () => {},
 })

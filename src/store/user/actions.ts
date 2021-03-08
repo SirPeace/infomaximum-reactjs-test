@@ -11,4 +11,4 @@ export const updateUserData = (data: UserState): updateUserDataAction => ({
   payload: data,
 })
 
-export type AuthAction = updateUserDataAction
+export type UserAction = updateUserDataAction

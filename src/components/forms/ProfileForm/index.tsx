@@ -9,14 +9,6 @@ import { UserState } from "../../../store/user/reducer"
 import InputAdapter from "../Adapters/InputAdapter"
 import PasswordInputAdapter from "../Adapters/PasswordInputAdapter"
 
-export interface ProfileFormFields {
-  firstName: string
-  secondName: string
-  email: string
-  password: string
-  passwordConfirmation: string
-}
-
 const schema = yup.object().shape({
   firstName: yup
     .string()
@@ -45,15 +37,20 @@ const schema = yup.object().shape({
   }),
 })
 
-export interface ProfileFormProps {
-  handleErrors: (error: string) => void
-  onSubmit: () => void
-  afterSubmit: () => void
-  onSuccess: (values: ProfileFormFields) => void
-  onChange: (values: ProfileFormFields) => void
+export interface ProfileFormFields {
   firstName: string
   secondName: string
   email: string
+  password: string
+  passwordConfirmation: string
+}
+
+interface ProfileFormProps {
+  handleErrors: (error: string) => void
+  onSubmit?: () => void
+  afterSubmit?: () => void
+  onSuccess?: (values: ProfileFormFields) => void
+  onChange?: (values: ProfileFormFields) => void
   user: UserState
 }
 
@@ -62,46 +59,48 @@ const ProfileForm = React.forwardRef<HTMLFormElement, ProfileFormProps>(
     const validate = useValidationSchema(schema, true)
     const [editUser] = useMutation(EditUser)
 
-    const handleSubmit = async (data: ProfileFormFields) => {
-      onSubmit()
+    const handleSubmit = async (fields: ProfileFormFields) => {
+      if (onSubmit) onSubmit()
 
       const userData = {
         id: user.id,
-        firstName: data.firstName,
-        secondName: data.secondName,
-        email: data.email,
-        password: data.password,
+        firstName: fields.firstName,
+        secondName: fields.secondName,
+        email: fields.email,
+        password: fields.password,
       }
 
       try {
         await editUser({ variables: userData })
-        onSuccess({
-          email: data.email || "",
-          firstName: data.firstName || "",
-          secondName: data.secondName || "",
-          password: data.password || "",
-          passwordConfirmation: data.passwordConfirmation || "",
-        })
+        if (onSuccess) {
+          onSuccess({
+            email: fields.email || "",
+            firstName: fields.firstName || "",
+            secondName: fields.secondName || "",
+            password: fields.password || "",
+            passwordConfirmation: fields.passwordConfirmation || "",
+          })
+        }
       } catch (err) {
         handleErrors(err.message)
       }
 
-      afterSubmit()
+      if (afterSubmit) afterSubmit()
     }
 
     return (
       <Form
         onSubmit={handleSubmit}
-        validate={(values: ProfileFormFields) => {
-          const errors = validate(values)
+        validate={(fields: ProfileFormFields) => {
+          const errors = validate(fields)
 
-          if (!errors) {
+          if (!errors && onChange) {
             onChange({
-              email: values.email || "",
-              firstName: values.firstName || "",
-              secondName: values.secondName || "",
-              password: values.password || "",
-              passwordConfirmation: values.passwordConfirmation || "",
+              email: fields.email || "",
+              firstName: fields.firstName || "",
+              secondName: fields.secondName || "",
+              password: fields.password || "",
+              passwordConfirmation: fields.passwordConfirmation || "",
             })
           }
 

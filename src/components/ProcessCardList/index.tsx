@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Dispatch } from "react"
 import { useQuery } from "@apollo/client"
 
 import { ProcessesList } from "../../server/queries"
@@ -7,14 +7,15 @@ import Loader from "../Loader"
 import ProcessCard from "../ProcessCard"
 import { connect } from "react-redux"
 import { ProcessesState } from "../../store/processes/reducer"
-import { setProcesses } from "../../store/processes/actions"
+import { ProcessesAction, setProcesses } from "../../store/processes/actions"
+import { State } from "../../store"
 
-// interface ProcessCardListProps {
-//   processes: ProcessesState
-//   setProcesses: (data: ProcessesState) => void
-// }
+interface ProcessCardListProps {
+  processes: ProcessesState
+  setProcesses: (data: ProcessesState) => void
+}
 
-const ProcessCardList = ({ processes, setProcesses }: any) => {
+const ProcessCardList = ({ processes, setProcesses }: ProcessCardListProps) => {
   const { loading, error } = useQuery(ProcessesList, {
     skip: JSON.stringify(processes) !== "[]",
     onCompleted: (data: any) => {
@@ -27,7 +28,7 @@ const ProcessCardList = ({ processes, setProcesses }: any) => {
   ) : error ? (
     <Alert message={error.message} render={!!error} type="danger" />
   ) : (
-    processes.map((process: any, index: number) => (
+    (processes as any).map((process: any, index: number) => (
       <div style={{ marginBottom: 12 }} key={process.id}>
         <ProcessCard
           name={process.name}
@@ -45,11 +46,11 @@ const ProcessCardList = ({ processes, setProcesses }: any) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: State) => ({
   processes: state.processes,
 })
 
-const mapDispatchToProps = (dispatch: Function) => ({
+const mapDispatchToProps = (dispatch: Dispatch<ProcessesAction>) => ({
   setProcesses: (data: ProcessesState) => dispatch(setProcesses(data)),
 })
 

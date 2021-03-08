@@ -11,34 +11,28 @@ const NavBar: VFC = () => {
   }
 
   return (
-    <>
-      <header className={classes["app-bar"]}>
-        <div className={classes.barStart}>
-          <button
-            className={classes["drawer-button"]}
-            onClick={() => setDrawer(true)}
-          ></button>
+    <header className={classes["app-bar"]}>
+      <div className={classes.barStart}>
+        <button
+          className={classes["drawer-button"]}
+          onClick={() => setDrawer(true)}
+        ></button>
 
-          <nav className={classes["app-bar__nav"]}>
-            <span
-              className={classes["app-bar__nav-link"]}
-              onClick={() => setDrawer(true)}
-            >
-              Меню
-            </span>
-          </nav>
-        </div>
-        <div className={classes.barEnd}>
-          <a
-            href="/login"
-            onClick={handleLogout}
-            className={classes.logoutLink}
+        <nav className={classes["app-bar__nav"]}>
+          <span
+            className={classes["app-bar__nav-link"]}
+            onClick={() => setDrawer(true)}
           >
-            Выйти из системы
-          </a>
-        </div>
-      </header>
-    </>
+            Меню
+          </span>
+        </nav>
+      </div>
+      <div className={classes.barEnd}>
+        <a href="/login" onClick={handleLogout} className={classes.logoutLink}>
+          Выйти из системы
+        </a>
+      </div>
+    </header>
   )
 }
 

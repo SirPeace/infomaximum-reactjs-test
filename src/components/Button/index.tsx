@@ -8,7 +8,7 @@ export interface ButtonProps {
   disabled?: boolean
   loading?: boolean
   type?: "submit" | "button"
-  [key: string]: any
+  [K: string]: any
 }
 
 const Button: React.VFC<ButtonProps> = ({

@@ -1,4 +1,4 @@
-import React, { ComponentType, VFC } from "react"
+import React, { ComponentType, Dispatch, VFC } from "react"
 import { connect } from "react-redux"
 import { Switch, Route, Redirect } from "react-router-dom"
 import { useQuery } from "@apollo/client"
@@ -11,8 +11,9 @@ import NotFound from "./pages/404"
 import ProcessesPage from "./pages/processes"
 import ProfilePage from "./pages/profile"
 import SignupPage from "./pages/signup"
-import { updateUserData } from "./store/user/actions"
+import { updateUserData, UserAction } from "./store/user/actions"
 import { UserState } from "./store/user/reducer"
+import { State } from "./store"
 
 interface AppProps {
   updateUser: (data: UserState) => void
@@ -23,12 +24,7 @@ const App: VFC<AppProps> = ({ user, updateUser }) => {
   const { loading, error } = useQuery(CurrentUser, {
     skip: JSON.stringify(user) !== JSON.stringify({}),
     onCompleted: data => {
-      updateUser({
-        id: data.currentUser.id,
-        firstName: data.currentUser.firstName,
-        secondName: data.currentUser.secondName,
-        email: data.currentUser.email,
-      })
+      updateUser(data.currentUser)
     },
     onError: err => {
       if ((err.graphQLErrors[0] as any)?.statusCode === 401) {
@@ -42,7 +38,13 @@ const App: VFC<AppProps> = ({ user, updateUser }) => {
 
   // Show error page if server is down
   if (error?.networkError?.message === "Failed to fetch") {
-    return <ErrorPage message="Связь с сервером потеряна..." links={[]} />
+    return (
+      <ErrorPage
+        title="Ошибка"
+        message="Связь с сервером потеряна..."
+        links={[]}
+      />
+    )
   }
 
   type RouteSchema = {
@@ -55,29 +57,27 @@ const App: VFC<AppProps> = ({ user, updateUser }) => {
     { path: "/profile", component: ProfilePage },
   ]
 
-  const renderProtectedRoutes = protectedRoutes.map(
-    (route: RouteSchema, key) => (
-      <Route
-        key={key}
-        path={route.path}
-        component={
-          !error
-            ? route.component
-            : (error.graphQLErrors[0] as any)?.statusCode === 401
-            ? ErrorPage.bind(null, {
-                title: "Ошибка авторизации",
-                message: "Вы не авторизованы",
-                links: [{ to: "/login", text: "Войти в систему" }],
-              })
-            : ErrorPage.bind(null, {
-                title: "Неизвестная ошибка",
-                message: "Произошла неизвестная ошибка",
-                links: [],
-              })
-        }
-      />
-    )
-  )
+  const renderProtectedRoutes = protectedRoutes.map((route, key) => (
+    <Route
+      key={key}
+      path={route.path}
+      component={
+        !error
+          ? route.component
+          : (error.graphQLErrors[0] as any)?.statusCode === 401
+          ? ErrorPage.bind(null, {
+              title: "Ошибка авторизации",
+              message: "Вы не авторизованы",
+              links: [{ to: "/login", text: "Войти в систему" }],
+            })
+          : ErrorPage.bind(null, {
+              title: "Неизвестная ошибка",
+              message: "Произошла неизвестная ошибка",
+              links: [],
+            })
+      }
+    />
+  ))
 
   return (
     <AppShell>
@@ -93,8 +93,8 @@ const App: VFC<AppProps> = ({ user, updateUser }) => {
 }
 
 export default connect(
-  (state: any) => ({ user: state.user }),
-  (dispatch: Function) => ({
+  (state: State) => ({ user: state.user }),
+  (dispatch: Dispatch<UserAction>) => ({
     updateUser: (data: UserState) => dispatch(updateUserData(data)),
   })
 )(App)

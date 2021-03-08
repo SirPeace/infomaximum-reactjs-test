@@ -12,11 +12,11 @@ export interface AlertProps {
 }
 
 const Alert: VFC<AlertProps> = ({
-  render,
   message,
+  render,
   type = "default",
-  onClose,
   size = "normal",
+  onClose,
 }) => {
   const appliedClasses = [classes.alert]
   if (type === "danger") {

@@ -1,34 +1,33 @@
-import React, { VFC } from "react"
+import React, { Dispatch, VFC } from "react"
 import { connect } from "react-redux"
-import { useQuery } from "@apollo/client"
 
 import Alert from "../components/Alert"
 import Button from "../components/Button"
 import classes from "./styles.module.scss"
-import { CurrentUser } from "../server/queries"
 import NavBar from "../components/NavBar"
 import Paper from "../components/Paper"
 import ProfileForm, { ProfileFormFields } from "../components/forms/ProfileForm"
-import { updateUserData } from "../store/user/actions"
+import { updateUserData, UserAction } from "../store/user/actions"
 import useTitle from "../utils/useTitle"
 import { UserState } from "../store/user/reducer"
+import { State } from "../store"
 
-const ProfilePage: VFC<{
+interface ProfilePageProps {
   user: UserState
   updateUser: (user: UserState) => void
-}> = ({ user, updateUser }) => {
-  useTitle("Редактирование пользователя")
+}
 
-  const { data } = useQuery(CurrentUser)
+const ProfilePage: VFC<ProfilePageProps> = ({ user, updateUser }) => {
+  useTitle("Редактирование пользователя")
 
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState<boolean>(false)
   const [canSubmit, setCanSubmit] = React.useState<boolean>(false)
   const [submitted, setSubmitted] = React.useState<boolean>(false)
   const [formSnapshot, setFormSnapshot] = React.useState<ProfileFormFields>({
-    email: data.currentUser.email,
-    firstName: data.currentUser.firstName,
-    secondName: data.currentUser.secondName,
+    email: user.email,
+    firstName: user.firstName,
+    secondName: user.secondName,
     password: "",
     passwordConfirmation: "",
   })
@@ -45,8 +44,8 @@ const ProfilePage: VFC<{
     )
   }
 
-  const onFormChange = (values: ProfileFormFields) => {
-    if (JSON.stringify(values) !== JSON.stringify(formSnapshot)) {
+  const onFormChange = (fields: ProfileFormFields) => {
+    if (JSON.stringify(fields) !== JSON.stringify(formSnapshot)) {
       setCanSubmit(true)
     } else {
       setCanSubmit(false)
@@ -58,14 +57,15 @@ const ProfilePage: VFC<{
     setLoading(true)
   }
 
-  const onSuccess = (values: ProfileFormFields) => {
+  const onSuccess = (fields: ProfileFormFields) => {
     updateUser({
+      __typename: user.__typename,
       id: user.id,
-      firstName: values.firstName,
-      secondName: values.secondName,
-      email: values.email,
+      firstName: fields.firstName,
+      secondName: fields.secondName,
+      email: fields.email,
     })
-    setFormSnapshot(values)
+    setFormSnapshot(fields)
     setSubmitted(true)
     setTimeout(() => setSubmitted(false), 3000)
   }
@@ -80,10 +80,7 @@ const ProfilePage: VFC<{
       <NavBar />
       <main className={classes.AppPage__body}>
         <div className={classes.ProfilePage__head}>
-          <h1>
-            {`${data.currentUser.firstName} ${data.currentUser.secondName}`}.
-            Редактирование
-          </h1>
+          <h1>{`${user.firstName} ${user.secondName}`}. Редактирование</h1>
           {submitted ? (
             <Button disabled>Сохранено</Button>
           ) : (
@@ -101,9 +98,6 @@ const ProfilePage: VFC<{
         <Paper>
           <ProfileForm
             user={user}
-            firstName={data.currentUser.firstName}
-            secondName={data.currentUser.secondName}
-            email={data.currentUser.email}
             ref={formElement}
             handleErrors={handleErrors}
             onSubmit={onFormSubmit}
@@ -118,17 +112,18 @@ const ProfilePage: VFC<{
           type="danger"
           message={error as string}
           size="small"
+          onClose={() => setError(null)}
         />
       </main>
     </div>
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: State) => ({
   user: state.user,
 })
 
-const mapDispatchToProps = (dispatch: Function) => ({
+const mapDispatchToProps = (dispatch: Dispatch<UserAction>) => ({
   updateUser: (data: UserState) => dispatch(updateUserData(data)),
 })
 

@@ -1,6 +1,7 @@
 import { ProcessesAction } from "./actions"
 
 export type ProcessesState = {
+  __typename: string
   id: number
   name: string
   numberOfExecutions: number

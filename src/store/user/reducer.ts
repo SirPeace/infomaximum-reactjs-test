@@ -1,6 +1,7 @@
-import { AuthAction } from "./actions"
+import { UserAction } from "./actions"
 
 export type UserState = {
+  __typename: string
   id: number
   firstName: string
   secondName: string
@@ -9,7 +10,7 @@ export type UserState = {
 
 const initialState: UserState | {} = {}
 
-const UserReducer = (state = initialState, action: AuthAction) => {
+const UserReducer = (state = initialState, action: UserAction) => {
   switch (action.type) {
     case "UPDATE_USER_DATA":
       return {

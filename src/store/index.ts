@@ -1,6 +1,11 @@
 import { combineReducers } from "redux"
-import ProcessesReducer from "./processes/reducer"
-import UserReducer from "./user/reducer"
+import ProcessesReducer, { ProcessesState } from "./processes/reducer"
+import UserReducer, { UserState } from "./user/reducer"
+
+export type State = {
+  user: UserState
+  processes: ProcessesState
+}
 
 const rootReducer = combineReducers({
   user: UserReducer,

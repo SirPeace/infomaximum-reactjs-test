@@ -1,10 +1,8 @@
-import { useQuery } from "@apollo/client"
 import React from "react"
 import { Link } from "react-router-dom"
 
 import Alert from "../components/Alert"
 import classes from "./styles.module.scss"
-import { CurrentUser } from "../server/queries"
 import LoginForm from "../components/forms/LoginForm"
 import Paper from "../components/Paper"
 import useTitle from "../utils/useTitle"
@@ -13,8 +11,6 @@ const LoginPage = () => {
   useTitle("Вход в систему")
 
   const [error, setError] = React.useState<string | null>(null)
-
-  const { error: authError } = useQuery(CurrentUser)
 
   const handleErrors = (error: string) => {
     setError(error)
@@ -34,7 +30,7 @@ const LoginPage = () => {
 
             <div className={classes.links}>
               <Link to="/sign-up">Зарегистрироваться</Link>
-              {!authError ? (
+              {localStorage.getItem("token") ? (
                 <Link to="/processes">Перейти в приложение</Link>
               ) : null}
             </div>

@@ -34,6 +34,14 @@ const schema = yup.object().shape({
     .required("Поле должно быть заполнено"),
 })
 
+interface SignupFormFields {
+  firstName: string
+  secondName: string
+  email: string
+  password: string
+  passwordConfirmation: string
+}
+
 export interface SignupFormProps {
   handleErrors: (error: string) => void
   onSubmit?: () => void
@@ -43,14 +51,14 @@ const SignupForm: VFC<SignupFormProps> = ({ handleErrors, onSubmit }) => {
   const validate = useValidationSchema(schema, true)
   const [signupUser] = useMutation(Signup)
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (fields: SignupFormFields) => {
     if (onSubmit) onSubmit()
 
     const signupData = {
-      firstName: data.firstName,
-      secondName: data.secondName,
-      email: data.email,
-      password: data.password,
+      firstName: fields.firstName,
+      secondName: fields.secondName,
+      email: fields.email,
+      password: fields.password,
     }
 
     try {

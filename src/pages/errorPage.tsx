@@ -1,18 +1,18 @@
-import React from "react"
+import React, { VFC } from "react"
 import { Link } from "react-router-dom"
 
 import classes from "./styles.module.scss"
 import Paper from "../components/Paper"
 import useTitle from "../utils/useTitle"
 
-const ErrorPage = ({
-  message,
-  links,
-}: {
+interface ErrorPageProps {
   message: string
   links: { to: string; text: string }[]
-}) => {
-  useTitle("Ошибка авторизации")
+  title: string
+}
+
+const ErrorPage: VFC<ErrorPageProps> = ({ message, links, title }) => {
+  useTitle(title)
 
   return (
     <div className={classes["LoginPage"]}>

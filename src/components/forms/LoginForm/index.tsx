@@ -18,22 +18,26 @@ const schema = yup.object().shape({
   password: yup.string().required("Поле должно быть заполнено"),
 })
 
-export interface LoginFormProps {
+interface LoginFormFields {
+  email: string
+  password: string
+}
+
+interface LoginFormProps {
   handleErrors: (error: string) => void
   onSubmit?: () => void
-  authorizeUser?: (token: string, data: Object) => void
-  user?: Object
 }
 
 const LoginForm: VFC<LoginFormProps> = ({ handleErrors, onSubmit }) => {
   const validate = useValidationSchema(schema, true)
+
   const [login] = useMutation(Login)
 
-  const handleSubmit = async (values: { email: string; password: string }) => {
+  const handleSubmit = async (fields: LoginFormFields) => {
     if (onSubmit) onSubmit()
 
     try {
-      const { data } = await login({ variables: values })
+      const { data } = await login({ variables: fields })
       localStorage.setItem("token", data.login.token)
       window.location.assign("/processes")
     } catch (e) {
