@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react"
+
 import classes from "./Input.module.scss"
 
 export interface InputProps {

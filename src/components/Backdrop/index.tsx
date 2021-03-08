@@ -1,5 +1,6 @@
 import React, { VFC } from "react"
 import { CSSTransition } from "react-transition-group"
+
 import classes from "./Backdrop.module.scss"
 
 export interface BackdropProps {

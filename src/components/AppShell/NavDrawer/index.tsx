@@ -1,8 +1,9 @@
 import React, { VFC } from "react"
 import { Link } from "react-router-dom"
+
 import Backdrop, { BackdropProps } from "../../Backdrop"
-import Drawer, { DrawerProps } from "../../Drawer"
 import classes from "./NavDrawer.module.scss"
+import Drawer, { DrawerProps } from "../../Drawer"
 
 interface NavDrawerProps extends DrawerProps, BackdropProps {}
 

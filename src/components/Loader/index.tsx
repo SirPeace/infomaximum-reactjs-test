@@ -1,4 +1,5 @@
 import React, { VFC } from "react"
+
 import loader from "./loader.svg"
 
 const Loader: VFC<{ width?: number; height?: number }> = ({

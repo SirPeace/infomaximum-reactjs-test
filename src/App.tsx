@@ -1,18 +1,18 @@
 import React, { ComponentType, VFC } from "react"
+import { connect } from "react-redux"
 import { Switch, Route, Redirect } from "react-router-dom"
 import { useQuery } from "@apollo/client"
 
+import AppShell from "./components/AppShell"
+import { CurrentUser } from "./server/queries"
+import ErrorPage from "./pages/errorPage"
 import LoginPage from "./pages/login"
+import NotFound from "./pages/404"
 import ProcessesPage from "./pages/processes"
 import ProfilePage from "./pages/profile"
 import SignupPage from "./pages/signup"
-import { CurrentUser } from "./server/queries"
-import ErrorPage from "./pages/errorPage"
-import NotFound from "./pages/404"
-import AppShell from "./components/AppShell"
-import { connect } from "react-redux"
-import { UserState } from "./store/user/reducer"
 import { updateUserData } from "./store/user/actions"
+import { UserState } from "./store/user/reducer"
 
 interface AppProps {
   updateUser: (data: UserState) => void

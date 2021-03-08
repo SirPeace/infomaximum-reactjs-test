@@ -2,10 +2,10 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 import Alert from "../components/Alert"
+import classes from "./styles.module.scss"
 import Paper from "../components/Paper"
 import SignupForm from "../components/forms/SignupForm"
 import useTitle from "../utils/useTitle"
-import classes from "./styles.module.scss"
 
 const SignupPage = () => {
   useTitle("Регистрация")

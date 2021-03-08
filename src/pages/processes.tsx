@@ -1,7 +1,7 @@
 import React from "react"
-import NavBar from "../components/NavBar"
 
 import classes from "./styles.module.scss"
+import NavBar from "../components/NavBar"
 import ProcessCardList from "../components/ProcessCardList"
 import useTitle from "../utils/useTitle"
 

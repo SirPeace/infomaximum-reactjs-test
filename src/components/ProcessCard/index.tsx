@@ -1,5 +1,6 @@
 import React, { VFC } from "react"
 import { Link } from "react-router-dom"
+
 import classes from "./ProcessCard.module.scss"
 import { calcDurationRatio } from "./utils/calcDurationRatio"
 import { formatDate } from "./utils/formatDate"

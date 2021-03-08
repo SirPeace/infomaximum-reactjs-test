@@ -1,4 +1,4 @@
-import React, { VFC } from "react"
+import React from "react"
 import { useQuery } from "@apollo/client"
 
 import { ProcessesList } from "../../server/queries"

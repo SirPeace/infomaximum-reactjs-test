@@ -1,16 +1,13 @@
 import React from "react"
-import { Field, Form, FieldInputProps } from "react-final-form"
-import Input from "../../Input"
-import PasswordInput from "../../PasswordInput"
+import { Field, Form } from "react-final-form"
 import classes from "./ProfileForm.module.scss"
 import * as yup from "yup"
 import useValidationSchema from "../../../utils/useValidationSchema"
-import { FieldState } from "final-form"
 import { useMutation } from "@apollo/client"
 import { EditUser } from "../../../server/mutations"
-import { connect } from "react-redux"
 import { UserState } from "../../../store/user/reducer"
-import { updateUserData } from "../../../store/user/actions"
+import InputAdapter from "../Adapters/InputAdapter"
+import PasswordInputAdapter from "../Adapters/PasswordInputAdapter"
 
 export interface ProfileFormFields {
   firstName: string
@@ -47,47 +44,6 @@ const schema = yup.object().shape({
       .oneOf([yup.ref("password"), null], "Пароли должны совпадать"),
   }),
 })
-
-const InputAdapter = ({
-  input,
-  meta,
-  id,
-  ...rest
-}: {
-  input: FieldInputProps<any, HTMLElement>
-  meta: FieldState<any>
-  id?: string
-  type: "number" | "email" | "password" | "text"
-  [K: string]: any
-}) => (
-  <Input
-    {...input}
-    {...rest}
-    errorMessage={meta.error}
-    error={meta.error && meta.touched}
-    id={id}
-  />
-)
-
-const PasswordInputAdapter = ({
-  input,
-  meta,
-  id,
-  ...rest
-}: {
-  input: FieldInputProps<any, HTMLElement>
-  meta: FieldState<any>
-  type: "password"
-  id?: string
-}) => (
-  <PasswordInput
-    {...input}
-    {...rest}
-    errorMessage={meta.error}
-    error={meta.error && meta.touched}
-    id={id}
-  />
-)
 
 export interface ProfileFormProps {
   handleErrors: (error: string) => void

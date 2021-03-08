@@ -1,14 +1,14 @@
 import React, { VFC } from "react"
-import { Field, Form, FieldInputProps } from "react-final-form"
-import Button from "../../Button"
-import Input from "../../Input"
-import PasswordInput from "../../PasswordInput"
-import classes from "./SignupForm.module.scss"
-import * as yup from "yup"
-import useValidationSchema from "../../../utils/useValidationSchema"
-import { FieldState } from "final-form"
+import { Field, Form } from "react-final-form"
 import { useMutation } from "@apollo/client"
+import * as yup from "yup"
+
+import Button from "../../Button"
+import classes from "./SignupForm.module.scss"
+import InputAdapter from "../Adapters/InputAdapter"
+import PasswordInputAdapter from "../Adapters/PasswordInputAdapter"
 import { Signup } from "../../../server/mutations"
+import useValidationSchema from "../../../utils/useValidationSchema"
 
 const schema = yup.object().shape({
   firstName: yup
@@ -33,40 +33,6 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Пароли должны совпадать")
     .required("Поле должно быть заполнено"),
 })
-
-const InputAdapter = ({
-  input,
-  meta,
-  ...rest
-}: {
-  input: FieldInputProps<any, HTMLElement>
-  meta: FieldState<any>
-  type: "number" | "email" | "password" | "text"
-}) => (
-  <Input
-    {...input}
-    {...rest}
-    errorMessage={meta.error}
-    error={meta.error && meta.touched}
-  />
-)
-
-const PasswordInputAdapter = ({
-  input,
-  meta,
-  ...rest
-}: {
-  input: FieldInputProps<any, HTMLElement>
-  meta: FieldState<any>
-  type: "password"
-}) => (
-  <PasswordInput
-    {...input}
-    {...rest}
-    errorMessage={meta.error}
-    error={meta.error && meta.touched}
-  />
-)
 
 export interface SignupFormProps {
   handleErrors: (error: string) => void

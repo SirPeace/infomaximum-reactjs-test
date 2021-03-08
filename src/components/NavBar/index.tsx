@@ -1,4 +1,5 @@
 import React, { VFC } from "react"
+
 import { AppShellContext } from "../AppShell"
 import classes from "./NavBar.module.scss"
 

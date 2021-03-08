@@ -1,4 +1,5 @@
 import React, { FC, ReactNode } from "react"
+
 import classes from "./Paper.module.scss"
 
 interface PaperProps {

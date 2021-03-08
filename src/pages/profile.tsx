@@ -1,17 +1,17 @@
 import React, { VFC } from "react"
+import { connect } from "react-redux"
+import { useQuery } from "@apollo/client"
 
 import Alert from "../components/Alert"
 import Button from "../components/Button"
+import classes from "./styles.module.scss"
+import { CurrentUser } from "../server/queries"
 import NavBar from "../components/NavBar"
 import Paper from "../components/Paper"
-import classes from "./styles.module.scss"
 import ProfileForm, { ProfileFormFields } from "../components/forms/ProfileForm"
-import useTitle from "../utils/useTitle"
-import { useQuery } from "@apollo/client"
-import { CurrentUser } from "../server/queries"
-import { connect } from "react-redux"
-import { UserState } from "../store/user/reducer"
 import { updateUserData } from "../store/user/actions"
+import useTitle from "../utils/useTitle"
+import { UserState } from "../store/user/reducer"
 
 const ProfilePage: VFC<{
   user: UserState

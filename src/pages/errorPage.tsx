@@ -1,9 +1,9 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
+import classes from "./styles.module.scss"
 import Paper from "../components/Paper"
 import useTitle from "../utils/useTitle"
-import classes from "./styles.module.scss"
 
 const ErrorPage = ({
   message,

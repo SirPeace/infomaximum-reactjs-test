@@ -1,4 +1,5 @@
 import React, { FC } from "react"
+
 import Input, { InputProps } from "../Input"
 import classes from "./PasswordInput.module.scss"
 

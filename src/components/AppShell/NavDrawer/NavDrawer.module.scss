@@ -16,7 +16,7 @@
 }
 
 .logo {
-  background-image: url("./logo-drawer.svg");
+  background-image: url("./icons/logo-drawer.svg");
   width: 66.32px;
   height: 24px;
   margin-left: 16px;
@@ -58,11 +58,11 @@
 }
 
 .profileLink::before {
-  background-image: url("./drawer-profile.svg");
+  background-image: url("./icons/drawer-profile.svg");
 }
 
 .processesLink::before {
-  background-image: url("./drawer-processes.svg");
+  background-image: url("./icons/drawer-processes.svg");
 }
 
 .button {
@@ -89,7 +89,7 @@
   }
 
   &.darkButton {
-    background-image: url("./drawer-button-dark.svg");
+    background-image: url("./icons/drawer-button-dark.svg");
 
     &:hover {
       box-shadow: 0 0 15px 2px rgba($color: #aaa, $alpha: 0.5);

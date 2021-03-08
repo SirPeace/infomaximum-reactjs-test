@@ -1,6 +1,7 @@
 import React, { VFC } from "react"
-import classes from "./Alert.module.scss"
 import { CSSTransition } from "react-transition-group"
+
+import classes from "./Alert.module.scss"
 
 export interface AlertProps {
   message: string

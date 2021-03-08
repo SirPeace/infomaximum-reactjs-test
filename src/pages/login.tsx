@@ -3,11 +3,11 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 import Alert from "../components/Alert"
+import classes from "./styles.module.scss"
+import { CurrentUser } from "../server/queries"
 import LoginForm from "../components/forms/LoginForm"
 import Paper from "../components/Paper"
-import { CurrentUser } from "../server/queries"
 import useTitle from "../utils/useTitle"
-import classes from "./styles.module.scss"
 
 const LoginPage = () => {
   useTitle("Вход в систему")
