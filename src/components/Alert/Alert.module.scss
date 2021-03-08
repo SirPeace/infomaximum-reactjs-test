@@ -1,0 +1,104 @@
+$alertHeight: 96px;
+$smallAlertHeight: 66px;
+
+.alert {
+  position: relative;
+  width: 100%;
+  height: $alertHeight;
+  background-color: #f5f5f5;
+  font-family: "Open Sans", Roboto, sans-serif;
+  font-size: 14px;
+  text-align: center;
+  line-height: $alertHeight;
+  transition: opacity 300ms;
+
+  &::before {
+    content: "";
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 24px;
+    left: 48px;
+    background-image: url("./icons/alert.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &.alertDisplay {
+    display: block;
+    opacity: 1;
+  }
+
+  &.alertSmall {
+    height: $smallAlertHeight;
+    line-height: $smallAlertHeight;
+
+    &::before {
+      height: 24px;
+      width: 24px;
+      background-size: 24px 24px;
+    }
+  }
+
+  &.alertDanger {
+    background-color: #ffe9db;
+    &::before {
+      background-image: url("./icons/alert-danger.svg");
+    }
+
+    .closeIcon {
+      background-color: #ecdace;
+    }
+  }
+
+  &.alertSuccess {
+    background-color: #e5f7d7;
+    &::before {
+      background-image: url("./icons/alert-success.svg");
+    }
+
+    .closeIcon {
+      background-color: #cbdfbd;
+    }
+  }
+
+  .closeIcon {
+    $iconSize: 18px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    display: block;
+    font-style: normal;
+    font-size: 12px;
+    width: $iconSize;
+    height: $iconSize;
+    line-height: $iconSize;
+    border-radius: 50%;
+    background-color: #d6d6d6;
+    color: #777;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s, background-color 0.3s;
+
+    &:hover {
+      color: crimson;
+    }
+
+    &:active {
+      background-color: #c9c9c9;
+    }
+  }
+
+  &-enter {
+    opacity: 0;
+  }
+  &-enter-active {
+    opacity: 1;
+  }
+  &-exit {
+    opacity: 1;
+  }
+  &-exit-active {
+    opacity: 0;
+  }
+}
